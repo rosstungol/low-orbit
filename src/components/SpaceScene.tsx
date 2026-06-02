@@ -7,6 +7,7 @@ import { Lighting } from './Lighting'
 import { Skybox } from './Skybox'
 import { SpaceDust } from './SpaceDust'
 import { Spaceship } from './Spaceship'
+import { Targets } from './Targets'
 
 export function SpaceScene() {
 	const meshRef = useRef<Group | null>(null)
@@ -18,6 +19,7 @@ export function SpaceScene() {
 			<Lighting />
 			<Skybox />
 			<SpaceDust />
+			<Targets />
 		</Canvas>
 	)
 }

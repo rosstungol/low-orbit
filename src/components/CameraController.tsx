@@ -16,13 +16,14 @@ const x = new Vector3(1, 0, 0)
 const y = new Vector3(0, 1, 0)
 const z = new Vector3(0, 0, 1)
 
+export const spaceshipPosition = new Vector3(0, 0, 0)
+
 const rotationMatrix = new Matrix4()
 const delayedRotationMatrix = new Matrix4()
 const delayedQuaternion = new Quaternion()
 const quaternionB = new Quaternion()
 
 const spaceshipTranslation = new Matrix4()
-const spaceshipPosition = new Vector3(0, 0, 0)
 const spaceshipMatrix = new Matrix4()
 
 const cameraTranslation = new Matrix4()
