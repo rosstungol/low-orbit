@@ -12,8 +12,9 @@ float rand2 (vec2 n) {
 }
 
 void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
-  vec2 dir = normalize(uv - vec2(0.5));
-  float dist = length(uv - vec2(0.5));
+  vec2 delta = uv - vec2(0.5);
+  float dist = length(delta);
+  vec2 dir = dist > 0.0 ? delta / dist : vec2(0.0);
   float positionalStrength = max(dist - 0.1, 0.0) * 0.1;
   positionalStrength = pow(positionalStrength, 1.5) * 7.0;
 
