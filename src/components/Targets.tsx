@@ -83,7 +83,13 @@ export function Targets() {
 
 	return (
 		<mesh geometry={geometry}>
-			<meshStandardMaterial roughness={0.5} metalness={0.5} color='#B03400' />
+			<meshStandardMaterial
+				roughness={0.5}
+				metalness={0.5}
+				color='#B03400'
+				emissive='#B03400'
+				emissiveIntensity={200}
+			/>
 		</mesh>
 	)
 }
