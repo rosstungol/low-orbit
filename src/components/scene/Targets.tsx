@@ -1,5 +1,11 @@
 import { useFrame } from '@react-three/fiber'
-import { useMemo, useState } from 'react'
+import {
+	type Dispatch,
+	type SetStateAction,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react'
 import { Quaternion, TorusGeometry, Vector3 } from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 
@@ -19,7 +25,11 @@ const tempV = new Vector3()
 const tempDir = new Vector3()
 const tempProjected = new Vector3()
 
-export function Targets() {
+export function Targets({
+	setTargetCount,
+}: {
+	setTargetCount: Dispatch<SetStateAction<number | null>>
+}) {
 	const [targets, setTargets] = useState(() => {
 		const arr = []
 
@@ -33,6 +43,10 @@ export function Targets() {
 
 		return arr
 	})
+
+	useEffect(() => {
+		setTargetCount(targets.length)
+	}, [targets, setTargetCount])
 
 	const geometry = useMemo(() => {
 		const geometries: TorusGeometry[] = []

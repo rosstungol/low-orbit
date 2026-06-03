@@ -2,7 +2,7 @@ import { Effect } from 'postprocessing'
 import { forwardRef, useMemo } from 'react'
 import { Uniform } from 'three'
 
-import { turbo } from '../config/updateSpaceshipAxis'
+import { turbo } from '../../config/updateSpaceshipAxis'
 
 const fragmentShader = `
 uniform float strength;
