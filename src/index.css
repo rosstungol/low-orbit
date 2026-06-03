@@ -15,11 +15,11 @@ main {
 
 main {
 	position: relative;
-	animation: fadeIn 3s ease-in-out forwards;
+	animation: fade-in 3s ease-in-out forwards;
 	color: #f2eff3;
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
 	from {
 		opacity: 0;
 	}
@@ -73,12 +73,12 @@ main {
 	text-align: right;
 	z-index: 10;
 
-	> h1 {
-		font-size: 40px;
+	> p {
+		font-size: 16px;
 	}
 
-	> h2 {
-		font-size: 16px;
+	> span {
+		font-size: 40px;
 	}
 }
 

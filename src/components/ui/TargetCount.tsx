@@ -1,8 +1,8 @@
 export function TargetCount({ targetCount }: { targetCount: number }) {
 	return (
 		<div className='target-count'>
-			<h2>targets left</h2>
-			<h1>{targetCount}</h1>
+			<p>targets left</p>
+			<span>{targetCount}</span>
 		</div>
 	)
 }
