@@ -9,8 +9,8 @@ import {
 	Vector3,
 } from 'three'
 
-import { attachControls } from '../config/attachControls'
-import { updateSpaceshipAxis } from '../config/updateSpaceshipAxis'
+import { attachControls } from '../../config/attachControls'
+import { updateSpaceshipAxis } from '../../config/updateSpaceshipAxis'
 
 const x = new Vector3(1, 0, 0)
 const y = new Vector3(0, 1, 0)

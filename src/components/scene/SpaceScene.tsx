@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Perf } from 'r3f-perf'
-import { useRef } from 'react'
+import { type Dispatch, type SetStateAction, useRef } from 'react'
 import type { Group } from 'three'
 
 import { CameraController } from './CameraController'
@@ -12,7 +12,11 @@ import { SpaceDust } from './SpaceDust'
 import { Spaceship } from './Spaceship'
 import { Targets } from './Targets'
 
-export function SpaceScene() {
+export function SpaceScene({
+	setTargetCount,
+}: {
+	setTargetCount: Dispatch<SetStateAction<number | null>>
+}) {
 	const meshRef = useRef<Group | null>(null)
 
 	return (
@@ -22,7 +26,7 @@ export function SpaceScene() {
 			<Lighting />
 			<Skybox />
 			<SpaceDust />
-			<Targets />
+			<Targets setTargetCount={setTargetCount} />
 
 			<EffectComposer>
 				<MotionBlur />
@@ -33,7 +37,7 @@ export function SpaceScene() {
 				/>
 			</EffectComposer>
 
-			{import.meta.env.DEV && <Perf />}
+			{import.meta.env.DEV && <Perf position='bottom-right' />}
 		</Canvas>
 	)
 }
