@@ -15,7 +15,7 @@ const fragmentShader = `
 void main() {
 	float d = distance(gl_PointCoord, vec2(0.5));
 	if (d > 0.5) discard;
-	gl_FragColor = vec4(0.46, 0.40, 0.46, 1.0);
+	gl_FragColor = vec4(0.18, 0.12, 0.18, 1.0);
 }
 `
 
