@@ -5,6 +5,7 @@ import { type Dispatch, type SetStateAction, useRef } from 'react'
 import type { Group } from 'three'
 
 import { CameraController } from './CameraController'
+import { EngineAudio } from './EngineAudio'
 import { Lighting } from './Lighting'
 import { MotionBlur } from './MotionBlur'
 import { Skybox } from './Skybox'
@@ -23,10 +24,11 @@ export function SpaceScene({
 		<Canvas dpr={[1, 1.5]} className='canvas'>
 			<CameraController meshRef={meshRef} />
 			<Spaceship meshRef={meshRef} />
+			<Targets setTargetCount={setTargetCount} />
 			<Lighting />
 			<Skybox />
 			<SpaceDust />
-			<Targets setTargetCount={setTargetCount} />
+			<EngineAudio />
 
 			<EffectComposer>
 				<MotionBlur />
