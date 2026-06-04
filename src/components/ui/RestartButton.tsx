@@ -1,8 +1,8 @@
 export function RestartButton() {
 	return (
-		<div className='restart'>
+		<div className='button-container'>
 			<button type='button' onClick={() => location.reload()}>
-				restart game
+				Restart Flight
 			</button>
 		</div>
 	)
