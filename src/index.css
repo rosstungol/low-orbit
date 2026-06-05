@@ -20,14 +20,17 @@ main {
 }
 
 .canvas {
-	animation: fade-in 3s ease-in-out forwards;
+	animation: fade-in 4s ease-in-out forwards;
 }
 
 @keyframes fade-in {
-	from {
+	0% {
 		opacity: 0;
 	}
-	to {
+	75% {
+		opacity: 0;
+	}
+	100% {
 		opacity: 1;
 	}
 }
