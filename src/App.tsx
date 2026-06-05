@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { SpaceScene } from './components/scene/SpaceScene'
 import { GameControls } from './components/ui/GameControls'
@@ -9,6 +9,12 @@ import { TargetCount } from './components/ui/TargetCount'
 function App() {
 	const [started, setStarted] = useState<boolean>(false)
 	const [targetsLeft, setTargetsLeft] = useState<number | null>(null)
+	const sound = useRef(new Audio('/assets/sounds/wow.mp3'))
+
+	if (targetsLeft === 0 && sound.current) {
+		sound.current.currentTime = 0
+		void sound.current.play().catch(() => {})
+	}
 
 	return (
 		<main>
