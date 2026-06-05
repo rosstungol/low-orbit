@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { SpaceScene } from './components/scene/SpaceScene'
 import { GameControls } from './components/ui/GameControls'
@@ -9,12 +9,26 @@ import { TargetCount } from './components/ui/TargetCount'
 function App() {
 	const [started, setStarted] = useState<boolean>(false)
 	const [targetsLeft, setTargetsLeft] = useState<number | null>(null)
-	const sound = useRef(new Audio('/assets/sounds/success.mp3'))
+	const sound = useRef<HTMLAudioElement | null>(null)
 
-	if (targetsLeft === 0 && sound.current) {
-		sound.current.currentTime = 0
-		void sound.current.play().catch(() => {})
-	}
+	useEffect(() => {
+		const audio = new Audio('/assets/sounds/success.mp3')
+		audio.preload = 'auto'
+		sound.current = audio
+
+		return () => {
+			audio.pause()
+			audio.src = ''
+			sound.current = null
+		}
+	}, [])
+
+	useEffect(() => {
+		if (targetsLeft === 0 && sound.current) {
+			sound.current.currentTime = 0
+			void sound.current.play().catch(() => {})
+		}
+	}, [targetsLeft])
 
 	return (
 		<main>
