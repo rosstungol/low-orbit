@@ -4,6 +4,7 @@ import {
 	type SetStateAction,
 	useEffect,
 	useMemo,
+	useRef,
 	useState,
 } from 'react'
 import { Quaternion, TorusGeometry, Vector3 } from 'three'
@@ -68,6 +69,8 @@ export function Targets({
 		return geometries.length > 0 ? mergeGeometries(geometries) : undefined
 	}, [targets])
 
+	const sound = useRef(new Audio('/assets/sounds/ping.mp3'))
+
 	useFrame(() => {
 		const hitIndices: number[] = []
 
@@ -83,6 +86,7 @@ export function Targets({
 
 			if (hitDist < TARGET_RAD && Math.abs(dist) < 0.5) {
 				hitIndices.push(index)
+				sound.current.play()
 			}
 		})
 
