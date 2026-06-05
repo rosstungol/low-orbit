@@ -2,7 +2,7 @@
 
 A flying game built with React Three Fiber. Playable on laptop and desktop devices.
 
-Live Demo: [Low Orbit](#)
+Live Demo: [Low Orbit](https://low-orbit-rouge.vercel.app/)
 
 ## Getting Started
 
