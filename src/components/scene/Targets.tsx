@@ -4,6 +4,7 @@ import {
 	type SetStateAction,
 	useEffect,
 	useMemo,
+	useRef,
 	useState,
 } from 'react'
 import { Quaternion, TorusGeometry, Vector3 } from 'three'
@@ -68,6 +69,20 @@ export function Targets({
 		return geometries.length > 0 ? mergeGeometries(geometries) : undefined
 	}, [targets])
 
+	const sound = useRef<HTMLAudioElement | null>(null)
+
+	useEffect(() => {
+		const audio = new Audio('/assets/sounds/ping.mp3')
+		audio.preload = 'auto'
+		sound.current = audio
+
+		return () => {
+			audio.pause()
+			audio.src = ''
+			sound.current = null
+		}
+	}, [])
+
 	useFrame(() => {
 		const hitIndices: number[] = []
 
@@ -83,6 +98,11 @@ export function Targets({
 
 			if (hitDist < TARGET_RAD && Math.abs(dist) < 0.5) {
 				hitIndices.push(index)
+
+				if (sound.current) {
+					sound.current.currentTime = 0
+					void sound.current.play().catch(() => {})
+				}
 			}
 		})
 
