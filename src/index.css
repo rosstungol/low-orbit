@@ -46,7 +46,7 @@ main {
 		gap: 4px;
 	}
 
-	h3 {
+	p {
 		font-size: 14px;
 		margin-bottom: 4px;
 	}
@@ -83,6 +83,7 @@ main {
 
 	> span {
 		font-size: 40px;
+		font-weight: bold;
 	}
 }
 

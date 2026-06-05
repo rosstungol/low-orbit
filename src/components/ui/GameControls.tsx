@@ -10,7 +10,7 @@ export function GameControls() {
 	return (
 		<div className='controls'>
 			<div>
-				<h3>movement</h3>
+				<p>movement</p>
 				<div className='key-group'>
 					<KeyboardKey>W</KeyboardKey>
 					<KeyboardKey>A</KeyboardKey>
@@ -19,11 +19,11 @@ export function GameControls() {
 				</div>
 			</div>
 			<div>
-				<h3>reset position</h3>
+				<p>reset position</p>
 				<KeyboardKey>R</KeyboardKey>
 			</div>
 			<div>
-				<h3>turbo</h3>
+				<p>turbo</p>
 				<KeyboardKey>shift</KeyboardKey>
 			</div>
 		</div>
