@@ -9,7 +9,7 @@ import { TargetCount } from './components/ui/TargetCount'
 function App() {
 	const [started, setStarted] = useState<boolean>(false)
 	const [targetsLeft, setTargetsLeft] = useState<number | null>(null)
-	const sound = useRef(new Audio('/assets/sounds/wow.mp3'))
+	const sound = useRef(new Audio('/assets/sounds/success.mp3'))
 
 	if (targetsLeft === 0 && sound.current) {
 		sound.current.currentTime = 0
