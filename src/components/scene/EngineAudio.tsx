@@ -12,19 +12,28 @@ export function EngineAudio() {
 		const listener = new AudioListener()
 		const sound = new Audio(listener)
 
-		new AudioLoader().load('/assets/sounds/engine.mp3', (buffer) => {
-			if (!isMounted) return
-			sound.setBuffer(buffer)
-			sound.setLoop(true)
-			sound.setVolume(0.2)
-			sound.play()
-		})
+		new AudioLoader().load(
+			'/assets/sounds/engine.mp3',
+			(buffer) => {
+				if (!isMounted) return
+				sound.setBuffer(buffer)
+				sound.setLoop(true)
+				sound.setVolume(0.2)
+				sound.play()
+			},
+			undefined,
+			(error) => {
+				console.error('Failed to load engine audio:', error)
+			}
+		)
 
 		audioRef.current = sound
 
 		return () => {
 			isMounted = false
 			sound.stop()
+			sound.disconnect()
+			listener.clear()
 		}
 	}, [])
 
