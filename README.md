@@ -1,8 +1,8 @@
 # Low Orbit
 
-A flying game built with React Three Fiber. Playable on laptop and desktop devices.
+A flying game built with Three.js and React Three Fiber. Playable on laptop and desktop devices.
 
-**Live Demo:** [Low Orbit](https://low-orbit-rouge.vercel.app/)
+**Live Demo:** [Low Orbit](https://low-orbit.pages.dev/)
 
 ## Getting Started
 
