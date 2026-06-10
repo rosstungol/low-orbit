@@ -4,6 +4,7 @@ import { controls } from './controls'
 
 let yawVelocity = 0
 let pitchVelocity = 0
+const angularAccelerationStep = 0.1
 const maxAngularVelocity = 2.4
 const spaceshipSpeed = 0.2
 export let turbo = 0
@@ -27,19 +28,19 @@ export function updateSpaceshipAxis(
 	pitchVelocity *= damping
 
 	if (controls.a) {
-		yawVelocity += 0.08
+		yawVelocity += angularAccelerationStep
 	}
 
 	if (controls.d) {
-		yawVelocity -= 0.08
+		yawVelocity -= angularAccelerationStep
 	}
 
 	if (controls.w) {
-		pitchVelocity += 0.08
+		pitchVelocity += angularAccelerationStep
 	}
 
 	if (controls.s) {
-		pitchVelocity -= 0.08
+		pitchVelocity -= angularAccelerationStep
 	}
 
 	if (Math.abs(yawVelocity) > maxAngularVelocity)
