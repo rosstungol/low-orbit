@@ -27,19 +27,19 @@ export function updateSpaceshipAxis(
 	pitchVelocity *= damping
 
 	if (controls.a) {
-		yawVelocity += 0.08
+		yawVelocity += 0.1
 	}
 
 	if (controls.d) {
-		yawVelocity -= 0.08
+		yawVelocity -= 0.1
 	}
 
 	if (controls.w) {
-		pitchVelocity += 0.08
+		pitchVelocity += 0.1
 	}
 
 	if (controls.s) {
-		pitchVelocity -= 0.08
+		pitchVelocity -= 0.1
 	}
 
 	if (Math.abs(yawVelocity) > maxAngularVelocity)
