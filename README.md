@@ -6,23 +6,19 @@ A flying game built with Three.js and React Three Fiber. Playable on laptop and 
 
 ## Getting Started
 
-### Installation
 Install the dependencies:
-
 ```bash
 npm install
 ```
 
-### Development
 Start the development server:
-
 ```bash
 npm run dev
 ``` 
 
 ## Linter and Formatter
-Run the Biome.js linter and formatter:
 
+Run the Biome.js linter and formatter:
 ```bash
 npm run lint-format
 ```
