@@ -8,13 +8,10 @@ A 3D spaceship flying game built with React Three Fiber.
 
 | Layer | Technology |
 |---|---|
-| Language | TypeScript 6 |
-| UI | React 19 |
-| 3D Engine | Three.js |
-| React–Three Adapter | @react-three/fiber 9 |
-| R3D Helpers | @react-three/drei 10 |
-| Post-Processing | @react-three/postprocessing |
-| Build Tool | Vite 8 |
+| Framework | React 19 + TypeScript |
+| 3D Rendering | React Three Fiber, Three.js | 
+| R3F Helpers / Post-Processing | Drei, Postprocessing |
+| Build | Vite 8 |
 | Linter / Formatter | Biome |
 
 ## Getting Started
