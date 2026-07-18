@@ -1,7 +1,9 @@
 import { useGLTF } from '@react-three/drei/core/Gltf'
-import type { JSX, RefObject } from 'react'
+import { type JSX, type RefObject, useEffect } from 'react'
 import type { Group, Mesh, MeshStandardMaterial } from 'three'
 import type { GLTF } from 'three-stdlib'
+
+import { setShipRadius } from '../../config/shipBounds'
 
 type GLTFResult = GLTF & {
 	nodes: {
@@ -21,6 +23,16 @@ export function Spaceship(props: SpaceshipProps) {
 	const { nodes, materials } = useGLTF(
 		'/assets/models/spaceship.glb'
 	) as unknown as GLTFResult
+
+	useEffect(() => {
+		const geometry = nodes.defaultMaterial.geometry
+		if (!geometry.boundingSphere) {
+			geometry.computeBoundingSphere()
+		}
+		if (geometry.boundingSphere) {
+			setShipRadius(geometry.boundingSphere.radius)
+		}
+	}, [nodes])
 
 	return (
 		<group ref={meshRef} {...groupProps} dispose={null}>
