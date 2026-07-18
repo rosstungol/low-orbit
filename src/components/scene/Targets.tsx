@@ -34,7 +34,7 @@ export function Targets({
 	const [targets, setTargets] = useState(() => {
 		const arr = []
 
-		for (let i = 0; i < 30; i++) {
+		for (let i = 0; i < 20; i++) {
 			arr.push({
 				center: randomPoint(new Vector3(120, 120, 300)),
 				direction: randomPoint().normalize(),

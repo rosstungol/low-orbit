@@ -1,6 +1,7 @@
 import type { PerspectiveCamera, Vector3 } from 'three'
 
 import { controls } from './controls'
+import { touchState } from './touchState'
 
 let yawVelocity = 0
 let pitchVelocity = 0
@@ -8,6 +9,12 @@ const angularAccelerationStep = 0.1
 const maxAngularVelocity = 2.4
 const spaceshipSpeed = 0.2
 export let turbo = 0
+
+let resetRequested = false
+
+export function requestReset() {
+	resetRequested = true
+}
 
 function easeOutQuad(x: number) {
 	return 1 - (1 - x) * (1 - x)
@@ -19,7 +26,8 @@ export function updateSpaceshipAxis(
 	z: Vector3,
 	spaceshipPosition: Vector3,
 	camera: PerspectiveCamera,
-	delta: number
+	delta: number,
+	baseFov = 45
 ) {
 	const frameScale = delta * 60
 	const damping = 0.95 ** frameScale
@@ -27,19 +35,19 @@ export function updateSpaceshipAxis(
 	yawVelocity *= damping
 	pitchVelocity *= damping
 
-	if (controls.a) {
+	if (controls.a || touchState.a) {
 		yawVelocity += angularAccelerationStep
 	}
 
-	if (controls.d) {
+	if (controls.d || touchState.d) {
 		yawVelocity -= angularAccelerationStep
 	}
 
-	if (controls.w) {
+	if (controls.w || touchState.w) {
 		pitchVelocity += angularAccelerationStep
 	}
 
-	if (controls.s) {
+	if (controls.s || touchState.s) {
 		pitchVelocity -= angularAccelerationStep
 	}
 
@@ -49,7 +57,8 @@ export function updateSpaceshipAxis(
 	if (Math.abs(pitchVelocity) > maxAngularVelocity)
 		pitchVelocity = Math.sign(pitchVelocity) * maxAngularVelocity
 
-	if (controls.r) {
+	if (resetRequested) {
+		resetRequested = false
 		yawVelocity = 0
 		pitchVelocity = 0
 		turbo = 0
@@ -59,7 +68,7 @@ export function updateSpaceshipAxis(
 		z.set(0, 0, 1)
 
 		spaceshipPosition.set(0, 0, 0)
-		camera.fov = 45
+		camera.fov = baseFov
 		camera.updateProjectionMatrix()
 
 		return
@@ -75,7 +84,7 @@ export function updateSpaceshipAxis(
 	y.normalize()
 	z.normalize()
 
-	if (controls.shift) {
+	if (controls.shift || touchState.shift) {
 		turbo += 0.025 * frameScale
 	} else {
 		turbo *= damping
@@ -85,7 +94,7 @@ export function updateSpaceshipAxis(
 
 	const turboSpeed = easeOutQuad(turbo) * 0.025
 
-	camera.fov = 45 + turboSpeed * 900
+	camera.fov = baseFov + turboSpeed * 900
 	camera.updateProjectionMatrix()
 
 	spaceshipPosition.addScaledVector(

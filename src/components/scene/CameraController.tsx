@@ -10,6 +10,8 @@ import {
 } from 'three'
 
 import { attachControls } from '../../config/attachControls'
+import { attachSwipeControls } from '../../config/attachSwipeControls'
+import { shipRadius } from '../../config/shipBounds'
 import { updateSpaceshipAxis } from '../../config/updateSpaceshipAxis'
 
 const x = new Vector3(1, 0, 0)
@@ -30,23 +32,35 @@ const cameraTranslation = new Matrix4()
 const cameraMatrixPosition = new Vector3(0, 0.3, 2.5)
 const cameraMatrix = new Matrix4()
 const cameraTilt = new Matrix4().makeRotationX(-0.2)
+const CAMERA_DISTANCE = cameraMatrixPosition.length()
 
 export function CameraController({
 	meshRef,
 }: {
 	meshRef: RefObject<Group | null>
 }) {
-	useEffect(() => attachControls(), [])
+	useEffect(() => {
+		const cleanup1 = attachControls()
+		const cleanup2 = attachSwipeControls()
+
+		return () => {
+			cleanup1()
+			cleanup2()
+		}
+	}, [])
 
 	useFrame(({ camera }, delta) => {
-		updateSpaceshipAxis(
-			x,
-			y,
-			z,
-			spaceshipPosition,
-			camera as PerspectiveCameraType,
-			delta
-		)
+		const pc = camera as PerspectiveCameraType
+		const aspect = pc.aspect
+		const padding = 1.3
+		const baseFov =
+			2 *
+			Math.atan(
+				(shipRadius * padding) / (CAMERA_DISTANCE * Math.min(1, aspect))
+			) *
+			(180 / Math.PI)
+
+		updateSpaceshipAxis(x, y, z, spaceshipPosition, pc, delta, baseFov)
 
 		rotationMatrix.makeBasis(x, y, z)
 
