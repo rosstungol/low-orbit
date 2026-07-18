@@ -19,12 +19,13 @@ export function GameControls() {
 				</div>
 			</div>
 			<div>
-				<p>reset position</p>
-				<KeyboardKey>R</KeyboardKey>
-			</div>
-			<div>
 				<p>turbo</p>
 				<KeyboardKey>shift</KeyboardKey>
+			</div>
+			<div className='mobile-hint'>
+				<p>mobile</p>
+				<p className='hint-text'>movement • swipe</p>
+				<p className='hint-text'>turbo • 2 fingers</p>
 			</div>
 		</div>
 	)

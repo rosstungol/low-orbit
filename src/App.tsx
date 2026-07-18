@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { SpaceScene } from './components/scene/SpaceScene'
+import { ControlsToggle } from './components/ui/ControlsToggle'
 import { GameControls } from './components/ui/GameControls'
+import { ResetPosition } from './components/ui/ResetPosition'
 import { RestartButton } from './components/ui/RestartButton'
 import { StartButton } from './components/ui/StartButton'
 import { TargetCount } from './components/ui/TargetCount'
@@ -9,6 +11,7 @@ import { TargetCount } from './components/ui/TargetCount'
 function App() {
 	const [started, setStarted] = useState<boolean>(false)
 	const [targetsLeft, setTargetsLeft] = useState<number | null>(null)
+	const [controlsVisible, setControlsVisible] = useState<boolean>(true)
 	const sound = useRef<HTMLAudioElement | null>(null)
 
 	useEffect(() => {
@@ -32,10 +35,24 @@ function App() {
 
 	return (
 		<main>
-			<GameControls />
+			<div className='controls-container'>
+				<ControlsToggle
+					visible={controlsVisible}
+					onToggle={() => setControlsVisible((v) => !v)}
+				/>
+				{controlsVisible && <GameControls />}
+			</div>
 
-			{!started && <StartButton onStart={() => setStarted(true)} />}
+			{!started && (
+				<StartButton
+					onStart={() => {
+						setStarted(true)
+						setControlsVisible(false)
+					}}
+				/>
+			)}
 			{started && <SpaceScene setTargetCount={setTargetsLeft} />}
+			{started && <ResetPosition />}
 
 			{targetsLeft != null && <TargetCount targetCount={targetsLeft} />}
 			{targetsLeft === 0 && <RestartButton />}
