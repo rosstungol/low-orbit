@@ -1,4 +1,4 @@
-export type ControlKey = 'a' | 'd' | 'w' | 's' | 'r' | 'shift'
+export type ControlKey = 'a' | 'd' | 'w' | 's' | 'shift'
 
 export type Controls = Record<ControlKey, boolean>
 
@@ -7,6 +7,5 @@ export const controls: Controls = {
 	d: false,
 	w: false,
 	s: false,
-	r: false,
 	shift: false,
 }

@@ -14,7 +14,6 @@ export function attachControls() {
 		controls.d = false
 		controls.w = false
 		controls.s = false
-		controls.r = false
 		controls.shift = false
 	}
 
