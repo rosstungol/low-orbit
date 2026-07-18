@@ -32,30 +32,22 @@ export function updateSpaceshipAxis(
 	const frameScale = delta * 60
 	const damping = 0.95 ** frameScale
 
-	const input = {
-		w: controls.w || touchState.w,
-		a: controls.a || touchState.a,
-		s: controls.s || touchState.s,
-		d: controls.d || touchState.d,
-		shift: controls.shift || touchState.shift,
-	}
-
 	yawVelocity *= damping
 	pitchVelocity *= damping
 
-	if (input.a) {
+	if (controls.a || touchState.a) {
 		yawVelocity += angularAccelerationStep
 	}
 
-	if (input.d) {
+	if (controls.d || touchState.d) {
 		yawVelocity -= angularAccelerationStep
 	}
 
-	if (input.w) {
+	if (controls.w || touchState.w) {
 		pitchVelocity += angularAccelerationStep
 	}
 
-	if (input.s) {
+	if (controls.s || touchState.s) {
 		pitchVelocity -= angularAccelerationStep
 	}
 
@@ -92,7 +84,7 @@ export function updateSpaceshipAxis(
 	y.normalize()
 	z.normalize()
 
-	if (input.shift) {
+	if (controls.shift || touchState.shift) {
 		turbo += 0.025 * frameScale
 	} else {
 		turbo *= damping

@@ -26,8 +26,8 @@ export function attachSwipeControls() {
 	let startY = 0
 
 	const handleTouchStart = (e: TouchEvent) => {
-		if (touchId === null && e.touches.length > 0) {
-			const touch = e.touches[0]
+		if (touchId === null && e.changedTouches.length > 0) {
+			const touch = e.changedTouches[0]
 			touchId = touch.identifier
 			startX = touch.clientX
 			startY = touch.clientY
@@ -70,9 +70,13 @@ export function attachSwipeControls() {
 	}
 
 	const handleTouchCancel = (e: TouchEvent) => {
-		const trackedTouchIsActive = Array.from(e.touches).some(
-			(touch) => touch.identifier === touchId
-		)
+		let trackedTouchIsActive = false
+		for (let i = 0; i < e.touches.length; i++) {
+			if (e.touches[i].identifier === touchId) {
+				trackedTouchIsActive = true
+				break
+			}
+		}
 		if (!trackedTouchIsActive) {
 			touchId = null
 			resetDirectionKeys()
