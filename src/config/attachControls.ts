@@ -31,19 +31,19 @@ export function attachControls() {
 		}
 	}
 
+	const handleVisibilityChange = () => {
+		if (document.hidden) resetControls()
+	}
+
 	window.addEventListener('keydown', handleKeyDown)
 	window.addEventListener('keyup', handleKeyUp)
 	window.addEventListener('blur', resetControls)
-	document.addEventListener('visibilitychange', () => {
-		if (document.hidden) resetControls()
-	})
+	document.addEventListener('visibilitychange', handleVisibilityChange)
 
 	return () => {
 		window.removeEventListener('keydown', handleKeyDown)
 		window.removeEventListener('keyup', handleKeyUp)
 		window.removeEventListener('blur', resetControls)
-		document.removeEventListener('visibilitychange', () => {
-			if (document.hidden) resetControls()
-		})
+		document.removeEventListener('visibilitychange', handleVisibilityChange)
 	}
 }
