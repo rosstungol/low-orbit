@@ -6,29 +6,29 @@ A 3D spaceship flying game built with React Three Fiber.
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | React 19 + TypeScript |
-| 3D Rendering | React Three Fiber, Three.js | 
-| R3F Helpers / Post-Processing | Drei, Postprocessing |
-| Build | Vite 8 |
-| Linter / Formatter | Biome |
+| Layer                         | Technology                  |
+| ----------------------------- | --------------------------- |
+| Framework                     | React 19 + TypeScript       |
+| 3D Rendering                  | React Three Fiber, Three.js |
+| R3F Helpers / Post-Processing | Drei, Postprocessing        |
+| Build                         | Vite+ (Vite 8 + Rolldown)   |
+| Linter / Formatter            | Vite+ (Oxlint + Oxfmt)      |
+| Package Manager               | Bun                         |
 
-## Getting Started
+## Commands
 
-Install the dependencies:
-```bash
-npm install
-```
+This project uses [Vite+](https://viteplus.dev) (`vp`) as its unified toolchain and [Bun](https://bun.sh) as its package manager.
 
-Start the development server:
-```bash
-npm run dev
-``` 
+| Command           | Description                              |
+| ----------------- | ---------------------------------------- |
+| `bun install`     | Install dependencies                     |
+| `bun run dev`     | Start the development server             |
+| `bun run build`   | Type-check and build for production      |
+| `bun run preview` | Preview the production build locally     |
+| `bun run check`   | Format, lint, and type-check the project |
+| `bun run fmt`     | Format code with Oxfmt                   |
+| `bun run lint`    | Lint code with Oxlint                    |
 
-## Linter and Formatter
+Most scripts wrap the matching Vite+ built-in. The `build` script also runs `tsc -b`; use `vp run build` to include that type check.
 
-Run the Biome.js linter and formatter:
-```bash
-npm run lint-format
-```
+A pre-commit hook runs `vp check --fix` on staged files, so formatting and lint fixes are applied automatically when you commit.
