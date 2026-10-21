@@ -1,12 +1,11 @@
 import type { PerspectiveCamera, Vector3 } from 'three'
 
 import { controls } from './controls'
-import { touchState } from './touchState'
 
 let yawVelocity = 0
 let pitchVelocity = 0
-const angularAccelerationStep = 0.1
-const maxAngularVelocity = 2.4
+// Steady-state turn rate at full stick, rad/s.
+const turnRate = 1.95
 const spaceshipSpeed = 0.2
 export let turbo = 0
 
@@ -32,30 +31,17 @@ export function updateSpaceshipAxis(
 	const frameScale = delta * 60
 	const damping = 0.95 ** frameScale
 
-	yawVelocity *= damping
-	pitchVelocity *= damping
+	// Ease toward the target rate so the result is the same at any frame rate.
+	let targetYaw = 0
+	if (controls.a) targetYaw += turnRate
+	if (controls.d) targetYaw -= turnRate
 
-	if (controls.a || touchState.a) {
-		yawVelocity += angularAccelerationStep
-	}
+	let targetPitch = 0
+	if (controls.w) targetPitch += turnRate
+	if (controls.s) targetPitch -= turnRate
 
-	if (controls.d || touchState.d) {
-		yawVelocity -= angularAccelerationStep
-	}
-
-	if (controls.w || touchState.w) {
-		pitchVelocity += angularAccelerationStep
-	}
-
-	if (controls.s || touchState.s) {
-		pitchVelocity -= angularAccelerationStep
-	}
-
-	if (Math.abs(yawVelocity) > maxAngularVelocity)
-		yawVelocity = Math.sign(yawVelocity) * maxAngularVelocity
-
-	if (Math.abs(pitchVelocity) > maxAngularVelocity)
-		pitchVelocity = Math.sign(pitchVelocity) * maxAngularVelocity
+	yawVelocity += (targetYaw - yawVelocity) * (1 - damping)
+	pitchVelocity += (targetPitch - pitchVelocity) * (1 - damping)
 
 	if (resetRequested) {
 		resetRequested = false
@@ -84,7 +70,7 @@ export function updateSpaceshipAxis(
 	y.normalize()
 	z.normalize()
 
-	if (controls.shift || touchState.shift) {
+	if (controls.shift) {
 		turbo += 0.025 * frameScale
 	} else {
 		turbo *= damping

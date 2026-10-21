@@ -53,15 +53,16 @@ vite.config.ts          Build config + Vite+ fmt/lint/staged blocks
 
 | File                                          | Role                                                                                              |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `controls.ts`, `touchState.ts`                | Mutable key-state maps for keyboard and touch.                                                    |
+| `controls.ts`                                 | Mutable key-state; keyboard and touch each hold their own state, combined into `controls`.        |
 | `attachControls.ts`, `attachSwipeControls.ts` | DOM event listeners (WASD/shift keys, swipes, two-finger turbo); each returns a cleanup function. |
 | `updateSpaceshipAxis.ts`                      | Flight physics: yaw/pitch velocities, damping, turbo, reset. Exports `turbo` and `requestReset`.  |
+| `hitTarget.ts`                                | Ring-collision math (pure); shared with the target geometry via `RING_RADIUS`.                    |
 | `shipBounds.ts`                               | Mutable `shipRadius` shared between the model and the camera FOV calculation.                     |
 
 ## Data flow
 
 ```
-DOM events ─▶ controls / touchState (module state)
+DOM events ─▶ controls (module state)
                      │
                      ▼
         updateSpaceshipAxis()   called each frame from CameraController.useFrame

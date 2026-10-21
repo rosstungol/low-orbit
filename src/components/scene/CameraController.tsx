@@ -28,6 +28,9 @@ const quaternionB = new Quaternion()
 const spaceshipTranslation = new Matrix4()
 const spaceshipMatrix = new Matrix4()
 
+const quaternionA = new Quaternion()
+const interpolatedQuaternion = new Quaternion()
+
 const cameraTranslation = new Matrix4()
 const cameraMatrixPosition = new Vector3(0, 0.3, 2.5)
 const cameraMatrix = new Matrix4()
@@ -50,6 +53,9 @@ export function CameraController({
 	}, [])
 
 	useFrame(({ camera }, delta) => {
+		// The render loop pauses in a hidden tab; an unclamped delta would
+		// teleport the ship by hundreds of units on the first frame back.
+		const dt = Math.min(delta, 1 / 15)
 		const pc = camera as PerspectiveCameraType
 		const aspect = pc.aspect
 		const padding = 1.3
@@ -60,7 +66,7 @@ export function CameraController({
 			) *
 			(180 / Math.PI)
 
-		updateSpaceshipAxis(x, y, z, spaceshipPosition, pc, delta, baseFov)
+		updateSpaceshipAxis(x, y, z, spaceshipPosition, pc, dt, baseFov)
 
 		rotationMatrix.makeBasis(x, y, z)
 
@@ -77,14 +83,13 @@ export function CameraController({
 			meshRef.current.matrixWorldNeedsUpdate = true
 		}
 
-		const quaternionA = new Quaternion().copy(delayedQuaternion)
+		quaternionA.copy(delayedQuaternion)
 
 		quaternionB.setFromRotationMatrix(rotationMatrix)
 
 		const interpolationFactor60fps = 0.175
-		const interpolationFactor =
-			1 - (1 - interpolationFactor60fps) ** (delta * 60)
-		const interpolatedQuaternion = new Quaternion().copy(quaternionA)
+		const interpolationFactor = 1 - (1 - interpolationFactor60fps) ** (dt * 60)
+		interpolatedQuaternion.copy(quaternionA)
 
 		interpolatedQuaternion.slerp(quaternionB, interpolationFactor)
 		delayedQuaternion.copy(interpolatedQuaternion)

@@ -19,6 +19,9 @@ void main() {
 }
 `
 
+// shortcut: dust is a static ball at the origin; about two minutes of
+// straight flight exits it. Wrap the field around the ship when someone
+// can verify the shader in a browser.
 export function SpaceDust({ count = 600000, radius = 1600 }) {
 	const geometry = useMemo(() => {
 		const geometry = new BufferGeometry()

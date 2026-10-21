@@ -4,12 +4,13 @@ import {
 	type SetStateAction,
 	useEffect,
 	useMemo,
-	useRef,
 	useState,
 } from 'react'
 import { Quaternion, TorusGeometry, Vector3 } from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 
+import { RING_RADIUS, hitTarget } from '../../config/hitTarget'
+import { useAudio } from '../../useAudio'
 import { spaceshipPosition } from './CameraController'
 
 function randomPoint(scale?: Vector3) {
@@ -19,12 +20,6 @@ function randomPoint(scale?: Vector3) {
 		Math.random() * 2 - 1
 	).multiply(scale || new Vector3(1, 1, 1))
 }
-
-const TARGET_RAD = 1
-
-const tempV = new Vector3()
-const tempDir = new Vector3()
-const tempProjected = new Vector3()
 
 export function Targets({
 	setTargetCount,
@@ -53,7 +48,7 @@ export function Targets({
 		const geometries: TorusGeometry[] = []
 
 		targets.forEach((target) => {
-			const torusGeometry = new TorusGeometry(TARGET_RAD, 0.2, 80, 25)
+			const torusGeometry = new TorusGeometry(RING_RADIUS, 0.2, 80, 25)
 
 			torusGeometry.applyQuaternion(
 				new Quaternion().setFromUnitVectors(
@@ -69,40 +64,16 @@ export function Targets({
 		return geometries.length > 0 ? mergeGeometries(geometries) : undefined
 	}, [targets])
 
-	const sound = useRef<HTMLAudioElement | null>(null)
-
-	useEffect(() => {
-		const audio = new Audio('/assets/sounds/ping.mp3')
-		audio.preload = 'auto'
-		sound.current = audio
-
-		return () => {
-			audio.pause()
-			audio.src = ''
-			sound.current = null
-		}
-	}, [])
+	const playPing = useAudio('/assets/sounds/ping.mp3')
 
 	useFrame(() => {
 		const hitIndices: number[] = []
 
 		targets.forEach((target, index) => {
-			tempV.copy(spaceshipPosition).sub(target.center)
-
-			const dist = target.direction.dot(tempV)
-
-			tempDir.copy(target.direction).multiplyScalar(dist)
-			tempProjected.copy(spaceshipPosition).sub(tempDir)
-
-			const hitDist = tempProjected.distanceTo(target.center)
-
-			if (hitDist < TARGET_RAD && Math.abs(dist) < 0.5) {
+			if (hitTarget(spaceshipPosition, target.center, target.direction)) {
 				hitIndices.push(index)
 
-				if (sound.current) {
-					sound.current.currentTime = 0
-					void sound.current.play().catch(() => {})
-				}
+				playPing()
 			}
 		})
 
