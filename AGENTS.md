@@ -8,8 +8,8 @@ making changes it covers.
   flow, and the Vite+ / Bun tooling setup. Read this before touching components,
   `src/config/`, or build config.
 
-Note: there is no test suite yet — `vp test` exits 1 with "No test files found".
-Validation is `vp check` plus `bun run build`.
+Note: tests cover the game-core math in `src/config/` (`vp test`, Vitest).
+Validation is `vp test`, `vp check` plus `bun run build`.
 
 <!--VITE PLUS START-->
 
