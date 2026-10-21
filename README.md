@@ -19,13 +19,13 @@ A 3D spaceship flying game built with React Three Fiber.
 
 This project uses [Vite+](https://viteplus.dev) (`vp`) as its unified toolchain and [Bun](https://bun.sh) as its package manager.
 
-| Command           | Description                                                 |
-| ----------------- | ----------------------------------------------------------- |
-| `bun install`     | Install dependencies                                        |
-| `bun run dev`     | Start the dev server                                        |
-| `bun run build`   | Type-check (`tsc -b`) and build for production              |
-| `bun run preview` | Preview the production build                                |
-| `bun run fix`     | Fix formatting, then lint and type-check (`vp check --fix`) |
-| `vp check`        | Verify only: format + lint + type check                     |
-| `vp fmt`          | Format files                                                |
-| `vp lint`         | Lint files                                                  |
+| Command            | Description                                                 |
+| ------------------ | ----------------------------------------------------------- |
+| `bun install`      | Install dependencies                                        |
+| `bun run dev`      | Start the dev server                                        |
+| `bun run build`    | Type-check (`tsc -b`) and build for production              |
+| `bun run preview`  | Preview the production build                                |
+| `bun run fix`      | Fix formatting, then lint and type-check (`vp check --fix`) |
+| `bun run vp check` | Verify only: format + lint + type check                     |
+| `bun run vp fmt`   | Format files                                                |
+| `bun run vp lint`  | Lint files                                                  |
