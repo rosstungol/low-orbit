@@ -4,13 +4,13 @@ import {
 	type SetStateAction,
 	useEffect,
 	useMemo,
-	useRef,
 	useState,
 } from 'react'
 import { Quaternion, TorusGeometry, Vector3 } from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 
 import { RING_RADIUS, hitTarget } from '../../config/hitTarget'
+import { useAudio } from '../../useAudio'
 import { spaceshipPosition } from './CameraController'
 
 function randomPoint(scale?: Vector3) {
@@ -56,7 +56,6 @@ export function Targets({
 					target.direction
 				)
 			)
-
 			torusGeometry.translate(target.center.x, target.center.y, target.center.z)
 
 			geometries.push(torusGeometry)
@@ -65,19 +64,7 @@ export function Targets({
 		return geometries.length > 0 ? mergeGeometries(geometries) : undefined
 	}, [targets])
 
-	const sound = useRef<HTMLAudioElement | null>(null)
-
-	useEffect(() => {
-		const audio = new Audio('/assets/sounds/ping.mp3')
-		audio.preload = 'auto'
-		sound.current = audio
-
-		return () => {
-			audio.pause()
-			audio.src = ''
-			sound.current = null
-		}
-	}, [])
+	const playPing = useAudio('/assets/sounds/ping.mp3')
 
 	useFrame(() => {
 		const hitIndices: number[] = []
@@ -86,10 +73,7 @@ export function Targets({
 			if (hitTarget(spaceshipPosition, target.center, target.direction)) {
 				hitIndices.push(index)
 
-				if (sound.current) {
-					sound.current.currentTime = 0
-					void sound.current.play().catch(() => {})
-				}
+				playPing()
 			}
 		})
 

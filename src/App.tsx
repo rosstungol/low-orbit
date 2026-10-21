@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { SpaceScene } from './components/scene/SpaceScene'
 import { ControlsToggle } from './components/ui/ControlsToggle'
@@ -7,31 +7,17 @@ import { ResetPosition } from './components/ui/ResetPosition'
 import { RestartButton } from './components/ui/RestartButton'
 import { StartButton } from './components/ui/StartButton'
 import { TargetCount } from './components/ui/TargetCount'
+import { useAudio } from './useAudio'
 
 function App() {
 	const [started, setStarted] = useState<boolean>(false)
 	const [targetsLeft, setTargetsLeft] = useState<number | null>(null)
 	const [controlsVisible, setControlsVisible] = useState<boolean>(true)
-	const sound = useRef<HTMLAudioElement | null>(null)
+	const playSound = useAudio('/assets/sounds/success.mp3')
 
 	useEffect(() => {
-		const audio = new Audio('/assets/sounds/success.mp3')
-		audio.preload = 'auto'
-		sound.current = audio
-
-		return () => {
-			audio.pause()
-			audio.src = ''
-			sound.current = null
-		}
-	}, [])
-
-	useEffect(() => {
-		if (targetsLeft === 0 && sound.current) {
-			sound.current.currentTime = 0
-			void sound.current.play().catch(() => {})
-		}
-	}, [targetsLeft])
+		if (targetsLeft === 0) playSound()
+	}, [targetsLeft, playSound])
 
 	return (
 		<main>
