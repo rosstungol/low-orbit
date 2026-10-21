@@ -6,29 +6,26 @@ A 3D spaceship flying game built with React Three Fiber.
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | React 19 + TypeScript |
-| 3D Rendering | React Three Fiber, Three.js | 
-| R3F Helpers / Post-Processing | Drei, Postprocessing |
-| Build | Vite 8 |
-| Linter / Formatter | Biome |
+| Layer                         | Technology                  |
+| ----------------------------- | --------------------------- |
+| Framework                     | React 19 + TypeScript       |
+| 3D Rendering                  | React Three Fiber, Three.js |
+| R3F Helpers / Post-Processing | Drei, Postprocessing        |
+| Build                         | Vite+ (Vite 8)              |
+| Package Manager               | Bun                         |
+| Linter / Formatter            | Oxlint / Oxfmt (via Vite+)  |
 
-## Getting Started
+## Commands
 
-Install the dependencies:
-```bash
-npm install
-```
+This project uses [Vite+](https://viteplus.dev) (`vp`) as its unified toolchain and [Bun](https://bun.sh) as its package manager.
 
-Start the development server:
-```bash
-npm run dev
-``` 
-
-## Linter and Formatter
-
-Run the Biome.js linter and formatter:
-```bash
-npm run lint-format
-```
+| Command            | Description                                                 |
+| ------------------ | ----------------------------------------------------------- |
+| `bun install`      | Install dependencies                                        |
+| `bun run dev`      | Start the dev server                                        |
+| `bun run build`    | Type-check (`tsc -b`) and build for production              |
+| `bun run preview`  | Preview the production build                                |
+| `bun run fix`      | Fix formatting, then lint and type-check (`vp check --fix`) |
+| `bun run vp check` | Verify only: format + lint + type check                     |
+| `bun run vp fmt`   | Format files                                                |
+| `bun run vp lint`  | Lint files                                                  |
